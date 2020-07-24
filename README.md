@@ -1,26 +1,19 @@
-# note-taker
+# Note Taker
 
-pseudo code :
+## Table of Contents
+[Description](#description)<br>
+[Dependencies](#dependencies)<br>
+[Test Instructions](#tests)  <br>
+[Author](#author)  <br>
+[Links](#links)  <br>
 
-server.js
-- [x] dependencies
-  - [x] fs
-  - [x] express
-  - [x] path?
-- [x] set up express & port
-  - [x] app = express
-  - [x] port = process.env.PORT || 3000
-- [ ] data variables
-  - [x] notes =  []    
-    - [x] noteTitle: ""
-    - [x] noteText: ""
-    - [x] id: ""... write logic for this
-      - [x] unique id for notes when created
-- [ ] routes
-  - [x] GET /notes (returns notes.html)
-  - [x] GET / (returns index.html)
-  - [x] GET /api/notes
-  - [x] POST /api/notes
-  - [ ] DELETE /api/notes/:id
-  
-- [x] start the server
+## Description
+This app is made for busy users who need to be able to write, save, and delete notes. The note dashboard allows users to view notes they have previously written, write new notes, and delete notes they no longer need. The application saves the notes to a server database so when the page is refreshed, their information is not lost.
+## Dependencies
+This application uses bootstrap and jquery on the front end and express on the back end. 
+## Author
+Kimberly Owens
+## Links
+[Github Repository](https://github.com/kimberlyj227)<br>
+[Heroku Deployment](https://mighty-ravine-59073.herokuapp.com/)
+
