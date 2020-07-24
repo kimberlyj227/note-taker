@@ -8,66 +8,83 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
 app.use(express.json());
 app.use(express.static("public"));
 
 // ----- DATA VARIABLES -----
 
+let notes = [];
+let id;
 
-const notes = [];
+const readNotes = () => {
+    fs.readFile(__dirname + "/db/db.json", (err, data) => {
+        if (err) throw err;
+        console.log("data: ", JSON.parse(data));
+        
+        notes = JSON.parse(data);
+    });
+};
+
+const writeNotes = () => {
+    fs.writeFile(__dirname + "/db/db.json", JSON.stringify(notes), (err) => {
+        if (err) throw err;
+        console.log("Wrote new note to db.json");
+    });
+};
+
 
 // ----- ROUTES -----
 
 // html routes
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "/index.html"));
 });
 
 app.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "notes.html"));
+    res.sendFile(path.join(__dirname, "/notes.html"));
 });
 
 // api routes
+
 app.get("/api/notes", (req, res) => {
-    fs.readFile(__dirname + "/db/db.json", (err, data) => {
-        if (err) throw err;
-        res.json(JSON.parse(data) || []);
-    })
+    readNotes();
+    res.json(notes);
 });
 
 
-// when the user hits save.. 
-// push newNote to note then write to db.json then read db.json
 app.post("/api/notes", (req, res) => {
+
     newNote = req.body;
-    newNote.id = newNote.title.replace(/\s+/g, "").toLowerCase();
-    console.log(newNote);
+    id = notes.length +1;
+    newNote.id = id++;
+   
     notes.push(newNote);
 
-    fs.writeFile(__dirname + "/db/db.json", JSON.stringify(notes), (err) => {
-        if (err) throw err;
-        console.log("Wrote new note to db.json");
-        return res.json(notes);
-    })
+    writeNotes();
+    res.json(notes);
 
-    // fs.readFile(__dirname + "/db/db.json", (err, data) => {
-    //     if (err) throw err;
-    //     res.json(JSON.parse(data) || []);
-    // })
-
-   
 });
 
-// app.delete("/api/notes/:id", (req, res) => {
-//     let id = req.param.note
-//     for(let i = 0; i < notes.length; i++) {
-//         if (id === notes[i].id) {
+app.delete("/api/notes/:id", (req, res) => {
+    var chosenId = parseInt(req.params.id);
+    
+    let foundNote = notes.find(note => note.id === chosenId);
+       
+    notes.splice(notes.indexOf(foundNote), 1);
 
-//         }
-//     }
-// })
+    writeNotes();
+    readNotes();
+
+    res.json(foundNote);
+
+})
 
 
 // ----- START SERVER -----
-app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
+app.listen(PORT, () => {
+    readNotes();
+    console.log(`App listening on PORT ${PORT}`)
+});

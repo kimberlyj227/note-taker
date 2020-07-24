@@ -14,8 +14,8 @@ server.js
   - [x] notes =  []    
     - [x] noteTitle: ""
     - [x] noteText: ""
-    - [ ] id: ""... write logic for this
-      - [ ] unique id for notes when created
+    - [x] id: ""... write logic for this
+      - [x] unique id for notes when created
 - [ ] routes
   - [x] GET /notes (returns notes.html)
   - [x] GET / (returns index.html)
