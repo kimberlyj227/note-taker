@@ -12,16 +12,15 @@ server.js
   - [x] port = process.env.PORT || 3000
 - [ ] data variables
   - [x] notes =  []    
-    - [ ] noteTitle: ""
-    - [ ] noteText: ""
-    - [ ] id: ""
+    - [x] noteTitle: ""
+    - [x] noteText: ""
+    - [ ] id: ""... write logic for this
       - [ ] unique id for notes when created
-  - [ ]
 - [ ] routes
   - [x] GET /notes (returns notes.html)
   - [x] GET / (returns index.html)
-  - [ ] GET /api/notes
-  - [ ] POST /api/notes
-  - [ ] /api/notes/:id
+  - [x] GET /api/notes
+  - [x] POST /api/notes
+  - [ ] DELETE /api/notes/:id
   
 - [x] start the server
